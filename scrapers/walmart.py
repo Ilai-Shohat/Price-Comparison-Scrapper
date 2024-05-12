@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-<<<<<<< HEAD
 import random
 import time
 
@@ -54,18 +53,3 @@ def get_price_from_walmart(product_name):
     except requests.exceptions.RequestException as e:
         # Handle any exceptions that occur during the request
         return "Error occurred while retrieving data from Walmart", str(e)
-=======
-
-def get_price_from_walmart(product_name):
-    url = f"https://www.walmart.com/search?q={product_name}"
-    response = requests.get(url)
-    soup = BeautifulSoup(response.content, "html.parser")
-    
-    item = soup.select_one(".search-result-gridview-item")
-    if item:
-        title = item.select_one(".product-title-link").text.strip()
-        price = item.select_one(".price-main .visuallyhidden").text.strip()
-        return title, price
-    
-    return "Not found", "N/A"
->>>>>>> 4b2dea416ea34764f9009d0cd1cf681ef463ca8f
