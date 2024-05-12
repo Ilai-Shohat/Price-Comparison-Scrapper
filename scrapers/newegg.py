@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-<<<<<<< HEAD
 import random
 import time
 
@@ -79,18 +78,3 @@ def get_price_from_newegg(product_name):
             return "Invalid Newegg product page response", "N/A"
     else:
         return "Invalid Newegg search page response", "N/A"
-=======
-
-def get_price_from_newegg(product_name):
-    url = f"https://www.newegg.com/p/pl?d={product_name}"
-    response = requests.get(url)
-    soup = BeautifulSoup(response.content, "html.parser")
-    
-    item = soup.select_one(".item-cell")
-    if item:
-        title = item.select_one(".item-title").text.strip()
-        price = item.select_one(".price-current strong").text.strip()
-        return title, price
-    
-    return "Not found", "N/A"
->>>>>>> 4b2dea416ea34764f9009d0cd1cf681ef463ca8f
