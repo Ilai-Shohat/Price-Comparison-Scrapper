@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-<<<<<<< HEAD
 from urllib.parse import quote_plus
 
 HEADERS = {
@@ -42,18 +41,3 @@ def get_price_from_bestbuy(product_name):
             return "Product not found", "N/A"
     else:
         return "Error in request", "N/A"
-=======
-
-def get_price_from_bestbuy(product_name):
-    url = f"https://www.bestbuy.com/site/searchpage.jsp?st={product_name}"
-    response = requests.get(url)
-    soup = BeautifulSoup(response.content, "html.parser")
-    
-    item = soup.select_one(".sku-item")
-    if item:
-        title = item.select_one(".sku-title").text.strip()
-        price = item.select_one(".price-block .priceView-customer-price span").text.strip()
-        return title, price
-    
-    return "Not found", "N/A"
->>>>>>> 4b2dea416ea34764f9009d0cd1cf681ef463ca8f
