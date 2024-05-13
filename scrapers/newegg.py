@@ -27,7 +27,6 @@ def get_price_from_newegg(product_name):
     
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, "html.parser")
-        
         items = soup.find_all("div", class_="item-container")
         
         if not items:
