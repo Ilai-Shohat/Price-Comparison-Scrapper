@@ -6,7 +6,6 @@ import re
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
 }
-
 def get_price_from_walmart(product_name):
     url = 'https://www.walmart.com/search?q=' + quote_plus(product_name)
     response = requests.get(url, headers=HEADERS)
@@ -24,12 +23,9 @@ def get_price_from_walmart(product_name):
                     if role_group_element:
                         sponsor = role_group_element.select_one('div[data-testid="list-view"] div div[class="mt5 mb0"] div')
                         if not sponsor:
-                            product_url = role_group_element.find('a')
-                            if product_url:
-                                product_url = product_url.get('href')
-                                parsed_url = urlparse(product_url)
-                                query_params = parse_qs(parsed_url.query)
-                                final_url = query_params['rd'][0] if 'rd' in query_params else 'https://www.walmart.com' + product_url
+                            product_title_element = role_group_element.select_one('span[data-automation-id="product-title"]')
+                            if product_title_element:
+                                product_title = product_title_element.text.strip()
 
                                 price_text = role_group_element.select_one('div[data-testid="list-view"] div[data-automation-id="product-price"] div').text.strip()
                                 if price_text:
@@ -37,9 +33,9 @@ def get_price_from_walmart(product_name):
                                     price = ''.join(numbers_and_dots)
                                     price = price[:-2] + '.' + price[-2:]
                                     price = float(price)
-                                    return final_url, price
+                                    return product_title, price
                                 else:
-                                    return final_url, "Price not available"
+                                    return product_title, "Price not available"
             else:
                 return "Product not found", "N/A"
         else:
