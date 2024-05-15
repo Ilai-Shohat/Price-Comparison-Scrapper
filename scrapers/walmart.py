@@ -21,21 +21,21 @@ def get_price_from_walmart(product_name):
                 for product in products:
                     role_group_element = product.select_one('div[role="group"]')
                     if role_group_element:
+                        product_url = "https://www.walmart.com" + role_group_element.find('a').get('href')
                         sponsor = role_group_element.select_one('div[data-testid="list-view"] div div[class="mt5 mb0"] div')
                         if not sponsor:
                             product_title_element = role_group_element.select_one('span[data-automation-id="product-title"]')
                             if product_title_element:
                                 product_title = product_title_element.text.strip()
-
                                 price_text = role_group_element.select_one('div[data-testid="list-view"] div[data-automation-id="product-price"] div').text.strip()
                                 if price_text:
                                     numbers_and_dots = re.findall(r'[0-9.]+', price_text)
                                     price = ''.join(numbers_and_dots)
                                     price = price[:-2] + '.' + price[-2:]
                                     price = float(price)
-                                    return product_title, price
+                                    return product_title, price, product_url
                                 else:
-                                    return product_title, "Price not available"
+                                    return product_title, "Price not available", product_url
             else:
                 return "Product not found", "N/A"
         else:

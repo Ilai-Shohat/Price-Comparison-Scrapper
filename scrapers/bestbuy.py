@@ -30,14 +30,14 @@ def get_price_from_bestbuy(product_name):
                     if price_element:
                         price = price_element.span.text.strip()
                         price = float(price.replace('$', '').replace(',', ''))
-                        return title, price
+                        return title, price, full_item_page_link
                     else:
-                        return title, "Price not available"
+                        return title, "Price not available", full_item_page_link
                 else:
-                    return title, "Price not available"
+                    return title, "Price not available", full_item_page_link
             else:
-                return title, "Price not available"
+                return title, "Price not available", full_item_page_link
         else:
-            return "Product not found", "N/A"
+            return "Product not found", "N/A", 
     else:
         return "Error in request", "N/A"

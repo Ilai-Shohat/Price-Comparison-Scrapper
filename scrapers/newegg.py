@@ -55,24 +55,24 @@ def get_price_from_newegg(product_name):
             row_side_div = soup.find("div", class_="row-side")
             
             if not row_side_div:
-                return item_title, "Price not found"
+                return item_title, "Price not found", item_url
             
             price = row_side_div.find("li", class_="price-current")
             
             if not price:
-                return item_title, "Price not found"
+                return item_title, "Price not found", item_url
             
             dollar_price = price.find("strong").text
             cents_price = price.find("sup").text
             
             if not dollar_price or not cents_price:
-                return item_title, "Price not found"
+                return item_title, "Price not found", item_url
             
             price = dollar_price + cents_price
             price = price.replace(",", "")
             price = float(price)
             
-            return item_title, price
+            return item_title, price, item_url
         else:
             return "Invalid Newegg product page response", "N/A"
     else:
